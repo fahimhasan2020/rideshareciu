@@ -1,0 +1,22 @@
+Color code elegent blue:
+deep to light_ _ _ _
+
+#000063 deep
+
+#311b92 regular
+
+#6746c3 light
+
+#ede7f6 lightest
+
+Chocolate
+
+
+#560027 deep
+
+#880e4f medium
+
+#bc477b light
+
+
+

@@ -1,0 +1,35 @@
+{
+
+    "signIn": "Sign In",
+    "logIn": "Log In",
+    "forgotPassword?": "Forgot your password?",
+    "rememberMe": "Remember me",
+    "email": "Email",
+    "password": "Password",
+    "wrongEmailPasswordMessage": "Wrong email or password",
+    "welcomeToDashboard":"Welcome to dashboard",
+    "notActivatedError": "Your account has not been activated yet. Activate first",
+    "youAreBannedFor": "You have been banned for",
+    "seconds": "seconds",
+    "loginFirstError": "Login first",
+
+    "forgotPassword": "Forgot password",
+    "emailSendInstruction": "Enter your email address and we'll send you an email with instructions to reset your password.",
+    "enterEmail": "Enter email",
+    "sendEmail": "Send Email",
+    "alreadyAccount": "Already have account?",
+
+    "lockScreen": "Lock screen",
+    "enterPasswordAccessAdmin": "Enter your password to access the admin.",
+    "Unlock": "Unlock",
+
+    "blocked": "Blocked",
+    "accountHasBeenBlocked": "Your account has been blocked . Try to contact the administrator for valid reason ",
+    "wantToLogIn": "Want to log in from another account?",
+    "logout": "Logout",
+
+    "resetPassword": "Reset password",
+    "resetNewPassword": "Reset new password",
+    "newPassword": "New password",
+    "passwordConfirmation": "Password confirmation"
+}
