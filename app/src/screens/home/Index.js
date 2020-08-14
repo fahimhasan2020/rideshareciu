@@ -287,17 +287,85 @@ const RiderStackTwo = createStackNavigator({
             tintColor:'#eeeeee',
             activeTintColor:'#ffffff',
             headerStyle:{
-                backgroundColor:'#066089',
+                backgroundColor:'#000063',
+                height: 40,
+                paddingBottom:25,
+            },
+            headerTitle:'RIDER PANEL',
+            headerTitleStyle:{
+                color:'#ccc',
+                fontSize:20,
+                fontWeight:'bold'
             },
             headerLeft: (
                 <TouchableOpacity
                     onPress={()=>{navigation.openDrawer()}}>
-                    <Icon name="navicon" style={{color:'#eeeaee',margin:10}} size={25} />
+                    <Icon name="navicon" style={{color:'#eeeaee',margin:10,marginLeft:20}} size={25} />
                 </TouchableOpacity>
 
-            )
+            ),
         })
     },
+    Profile:{screen:Profile,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'Profile',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    Info:{screen:Info,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'Info',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    Settings:{screen:Settings,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'Settings',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    Faq:{screen:Faq,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'FAQ',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
 },{
     transitionConfig: () => fromRight(500),
     defaultNavigationOptions:{
@@ -311,13 +379,10 @@ const RiderStackTwo = createStackNavigator({
 const RiderCustomDrawerDesign = (props)=>(
     <Container>
         <Header style={styles.header}>
-            <ImageBackground source={require('../../../assets/img/bg3.jpg')} style={{width: '100%', height: 'auto'}}>
-                <Body style={{alignItems:'center',justifyContent:'center'}}>
-                    <View>
-                        <Text style={{color:'green'}}>Hello world</Text>
-                    </View>
-                </Body>
-            </ImageBackground>
+           <Image
+               style={styles.tinyLogo}
+               source={require('../../../assets/icon.png')}
+           />
         </Header>
         <View>
             <TouchableOpacity
