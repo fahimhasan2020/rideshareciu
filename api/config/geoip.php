@@ -109,11 +109,12 @@ return [
     |  all  - All location are cached
     |  some - Cache only the requesting user
     |  none - Disable cached
+    |	cache => 'none',
+    |   cache_tags => null,
     |
     */
 
-    cache => 'none',
-    cache_tags => null,
+    
 
     /*
     |--------------------------------------------------------------------------

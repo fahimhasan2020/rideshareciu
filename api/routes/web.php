@@ -1,6 +1,5 @@
 <?php
 Auth::routes();
-Route::get('sarah','NonUsers\VisitorViewController@samreena');
 Route::namespace('NonUsers')->group(function () {
     Route::get('/','VisitorViewController@index');
     Route::get('home', 'HomeController@index')->name('home');

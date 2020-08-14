@@ -24,7 +24,7 @@
                                             </div>
                                             <div class="form-group ">
                                                 <div class="col-xs-12">
-                                                    <input class="form-control" :class="loginFormErrorClass.email" v-model="loginForm.email" type="text" required="" :placeholder="'gmail'">
+                                                    <input class="form-control" :class="loginFormErrorClass.email" v-model="loginForm.email" type="text" required="" :placeholder="'email'">
                                                     <span class="text-danger">{{loginFormError.email}}</span>
                                                 </div>
                                             </div>

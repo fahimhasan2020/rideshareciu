@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 const data = {
-    'host':'http://192.168.0.106:8000/',
+    'host':'http://192.168.0.107:8000/',
     'firstName':'',
     'lastName':'',
     'rider':false,

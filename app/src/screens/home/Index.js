@@ -24,6 +24,10 @@ import FrontPage from "../auth/FrontPage";
 import RiderHome from "../rider/home/RiderHome";
 import Searching from "./Searching"
 import RiderContents from "../rider/home/RiderContents";
+import Profile from "../profile/Profile"
+import Info from "../profile/Info"
+import Settings from "../profile/Settings"
+import Faq from "../profile/Faq"
 
 class Index extends Component {
     render() {
@@ -134,7 +138,67 @@ const StackTwo = createStackNavigator({
             fontSize:20,
             fontWeight:'bold'
         }
-    })}
+    })},
+    Profile:{screen:Profile,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'Profile',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    Info:{screen:Info,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'Info',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    Settings:{screen:Settings,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'Settings',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    Faq:{screen:Faq,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'FAQ',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
 },{
     transitionConfig: () => fromRight(500),
     defaultNavigationOptions:{

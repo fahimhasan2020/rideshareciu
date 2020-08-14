@@ -338,7 +338,7 @@ var render = function() {
                               attrs: {
                                 type: "text",
                                 required: "",
-                                placeholder: "gmail"
+                                placeholder: "email"
                               },
                               domProps: { value: _vm.loginForm.email },
                               on: {
