@@ -28,6 +28,7 @@ import Profile from "../profile/Profile"
 import Info from "../profile/Info"
 import Settings from "../profile/Settings"
 import Faq from "../profile/Faq"
+import { FontAwesome } from '@expo/vector-icons';
 
 class Index extends Component {
     render() {
@@ -102,6 +103,7 @@ const StackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Ride',
         headerTitleStyle:{
             color:'#ccc',
@@ -117,6 +119,7 @@ const StackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Pole',
         headerTitleStyle:{
             color:'#ccc',
@@ -127,6 +130,7 @@ const StackTwo = createStackNavigator({
     Searching:{screen: Searching,navigationOptions:({navigation})=>({
         tintColor:'#eeeeee',
         activeTintColor:'#ffffff',
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerStyle:{
             backgroundColor:'#000063',
             height: 40,
@@ -142,6 +146,7 @@ const StackTwo = createStackNavigator({
     Profile:{screen:Profile,navigationOptions:({navigation})=>({
         tintColor:'#eeeeee',
         activeTintColor:'#ffffff',
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerStyle:{
             backgroundColor:'#000063',
             height: 40,
@@ -162,6 +167,7 @@ const StackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Info',
         headerTitleStyle:{
             color:'#ccc',
@@ -177,6 +183,7 @@ const StackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Settings',
         headerTitleStyle:{
             color:'#ccc',
@@ -192,6 +199,7 @@ const StackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'FAQ',
         headerTitleStyle:{
             color:'#ccc',
@@ -200,6 +208,7 @@ const StackTwo = createStackNavigator({
         }
     })},
 },{
+    initialRouteName:'Home',
     transitionConfig: () => fromRight(500),
     defaultNavigationOptions:{
         headerTintColor: '#066089',
@@ -314,6 +323,7 @@ const RiderStackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Profile',
         headerTitleStyle:{
             color:'#ccc',
@@ -329,6 +339,7 @@ const RiderStackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Info',
         headerTitleStyle:{
             color:'#ccc',
@@ -344,6 +355,7 @@ const RiderStackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Settings',
         headerTitleStyle:{
             color:'#ccc',
@@ -359,6 +371,7 @@ const RiderStackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'FAQ',
         headerTitleStyle:{
             color:'#ccc',
@@ -440,6 +453,7 @@ const mapStateToProps = (state) => ({
     loggedIn: state.auth.loggedIn,
     rider:state.auth.rider
 });
+
 const mapDispatchToProps = {
     //
 };
