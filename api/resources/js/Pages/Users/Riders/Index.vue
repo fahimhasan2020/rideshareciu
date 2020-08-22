@@ -69,6 +69,7 @@
                                             </th>
                                             <th scope="col" style="vertical-align: middle">Avatar</th>
                                             <th scope="col" style="width: 150px;vertical-align: middle">Email</th>
+                                            <th scope="col" style="width: 150px;vertical-align: middle">National Id</th>
                                             <th scope="col" style="width: 150px;vertical-align: middle">First Name</th>
                                             <th scope="col" style="width: 150px;vertical-align: middle">Last Name</th>
                                             <th scope="col" style="width: 150px;vertical-align: middle">Actions</th>
@@ -87,12 +88,19 @@
                                                 <img height="50px" width="50px" v-else src="../../../../../public/admin/assets/images/icons/assistant.svg" alt="">
                                             </td>
                                             <td style="vertical-align: middle">{{permission.email}}</td>
+                                            <td style="vertical-align: middle">{{permission.nid}}</td>
                                             <td style="vertical-align: middle">{{permission.first_name}}</td>
                                             <td style="vertical-align: middle">{{permission.last_name}}</td>
                                             <td style="vertical-align: middle">
-                                                <inertia-link  href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="Suspend admin" @click.prevent="suspendAdmin(permission.id)">
+                                                <inertia-link  href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="Delete" @click.prevent="suspendAdmin(permission.id)">
                                                     <i class="fa fa-trash"></i></inertia-link>
-                                                &nbsp;<a href="#" class="text-warning" data-toggle="tooltip" data-placement="top" title="Edit info"><i class="fa fa-pencil" data-toggle="modal" data-target="#exampleModals" @click.prevent="permissionPopUp(permission)"></i></a>
+                                                &nbsp;
+                                                <inertia-link v-if='permission.deactivated === 0'  :href="'/admins/rider/activate/'+permission.id" class="text-warning" title="Activate">
+                                                    <i class="fa fa-cloud-download"></i>
+                                                    </inertia-link>
+                                                    <inertia-link v-else :href="'/admins/rider/deactivate/'+permission.id" class="text-primary" title="Deactivate">
+                                                    <i class="fa fa-cloud-download"></i>
+                                                    </inertia-link>
                                             </td>
                                         </tr>
                                         </tbody>

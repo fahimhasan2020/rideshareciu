@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\VerifyOtp;
 use App\Model\VisitorCounter;
 use App\User;
+use App\Model\Rider;
 use App\Model\AdminChat;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -497,5 +498,20 @@ class HomeController extends Controller
         }else{
             return false;
         }
+    }
+
+    public function riderActivate($id)
+    {
+        $rider = Rider::find($id);
+        $rider->deactivated = 1;
+        $rider->update();
+        return redirect()->back();
+    }
+
+    public function riderDeactivate($id){
+        $rider = Rider::find($id);
+        $rider->deactivated = 0;
+        $rider->update();
+        return redirect()->back();
     }
 }

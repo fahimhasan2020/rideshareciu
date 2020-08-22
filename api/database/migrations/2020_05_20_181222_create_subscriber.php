@@ -19,6 +19,7 @@ class CreateSubscriber extends Migration
             $table->string('provider_id')->unique()->nullable();
             $table->string('password',200);
             $table->string('first_name',200)->nullable();
+            $table->string('nid',200)->nullable();
             $table->string('last_name',200)->nullable();
             $table->string('gender',200)->nullable();
             $table->string('profile_picture',200)->nullable();

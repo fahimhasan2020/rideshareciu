@@ -1,5 +1,5 @@
 <?php
-use Sentienel;
+
 
 function translations($json)
 {
@@ -7,11 +7,4 @@ function translations($json)
         return [];
     }
     return json_decode(file_get_contents($json), true);
-}
-
-function use_accessible($permission){
-    if (Sentienel::hasAccess(['all',$permission])){
-        return true;
-    }
-    return false;
 }

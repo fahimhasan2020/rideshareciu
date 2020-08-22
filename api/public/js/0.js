@@ -222,7 +222,7 @@ var render = function() {
           "inertia-link",
           { staticClass: "logo", attrs: { href: "/admin/dashboard" } },
           [
-            _c("span", [_vm._v("Ad"), _c("span", [_vm._v("min")])]),
+            _c("span", [_vm._v("AP"), _c("span", [_vm._v("I")])]),
             _c("i", { staticClass: "mdi mdi-layers" })
           ]
         )

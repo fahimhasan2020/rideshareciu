@@ -166,6 +166,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1074,6 +1082,18 @@ var render = function() {
                               },
                               attrs: { scope: "col" }
                             },
+                            [_vm._v("National Id")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticStyle: {
+                                width: "150px",
+                                "vertical-align": "middle"
+                              },
+                              attrs: { scope: "col" }
+                            },
                             [_vm._v("First Name")]
                           ),
                           _vm._v(" "),
@@ -1201,6 +1221,12 @@ var render = function() {
                             _c(
                               "td",
                               { staticStyle: { "vertical-align": "middle" } },
+                              [_vm._v(_vm._s(permission.nid))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              { staticStyle: { "vertical-align": "middle" } },
                               [_vm._v(_vm._s(permission.first_name))]
                             ),
                             _vm._v(" "),
@@ -1222,7 +1248,7 @@ var render = function() {
                                       href: "#",
                                       "data-toggle": "tooltip",
                                       "data-placement": "top",
-                                      title: "Suspend admin"
+                                      title: "Delete"
                                     },
                                     on: {
                                       click: function($event) {
@@ -1234,35 +1260,43 @@ var render = function() {
                                   [_c("i", { staticClass: "fa fa-trash" })]
                                 ),
                                 _vm._v(
-                                  "\n                                                 "
+                                  "\n                                                 \n                                                "
                                 ),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "text-warning",
-                                    attrs: {
-                                      href: "#",
-                                      "data-toggle": "tooltip",
-                                      "data-placement": "top",
-                                      title: "Edit info"
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fa fa-pencil",
-                                      attrs: {
-                                        "data-toggle": "modal",
-                                        "data-target": "#exampleModals"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.permissionPopUp(permission)
+                                permission.deactivated === 0
+                                  ? _c(
+                                      "inertia-link",
+                                      {
+                                        staticClass: "text-warning",
+                                        attrs: {
+                                          href:
+                                            "/admins/rider/activate/" +
+                                            permission.id,
+                                          title: "Activate"
                                         }
-                                      }
-                                    })
-                                  ]
-                                )
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-cloud-download"
+                                        })
+                                      ]
+                                    )
+                                  : _c(
+                                      "inertia-link",
+                                      {
+                                        staticClass: "text-primary",
+                                        attrs: {
+                                          href:
+                                            "/admins/rider/deactivate/" +
+                                            permission.id,
+                                          title: "Deactivate"
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-cloud-download"
+                                        })
+                                      ]
+                                    )
                               ],
                               1
                             )

@@ -1,34 +1,196 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View,TouchableOpacity } from 'react-native'
+import {connect} from 'react-redux'
+import { Text, StyleSheet, View,TouchableOpacity,ToastAndroid } from 'react-native'
 import {Inputs,Passwords,InputButtonBlue} from "../../../components/ui/Inputs";
-export default class RiderForgot extends Component {
+class RiderForgot extends Component {
     state = {
         username:'',
-        password:''
+        password:'',
+        sent:false,
+        otp:'',
+        reset:false,
+        confirmPassword:'',
+        loading:false
+    }
+
+    forgotPassword = () =>{
+        if(this.state.username === ''){
+            return ToastAndroid.show("Enter email first", ToastAndroid.SHORT);
+        }
+        const host = this.props.host;
+        this.setState({loading:true})
+        return fetch(host+'rider/reset/password/otp',{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username:this.state.username,
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.hasOwnProperty('fault')){
+                    this.setState({loading:false})
+                    ToastAndroid.show("Error sending otp", ToastAndroid.SHORT);
+                }else if (responseJson.hasOwnProperty('success')){
+                    this.setState({loading:false,sent:true});           
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    verifyOtp =() =>{
+        const host = this.props.host;
+        this.setState({loading:true})
+        return fetch(host+'rider/verify/otp',{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email:this.state.username,
+                otp:this.state.otp
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.hasOwnProperty('fault')){
+                    this.setState({loading:false})
+                    ToastAndroid.show('Wrong Otp', ToastAndroid.SHORT);
+                }else if(responseJson.hasOwnProperty('success')){
+                    this.setState({loading:false});
+                    this.setState({sent:false,reset:true});
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    resetPassword = () =>{
+        const host = this.props.host;
+        if(this.state.password === ''){
+            return ToastAndroid.show("Enter password first", ToastAndroid.SHORT);
+        }
+        if(this.state.confirmPassword === ''){
+            return ToastAndroid.show("Enter confirm password first", ToastAndroid.SHORT);
+        }
+        if(this.state.password !== this.state.confirmPassword){
+            return ToastAndroid.show("Password didnt matched", ToastAndroid.SHORT);
+        }
+        this.setState({loading:true})
+        return fetch(host+'rider/reset/password/string',{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            
+            body: JSON.stringify({
+                email:this.state.username,
+                password:this.state.password,
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson.hasOwnProperty('fault')){
+                    this.setState({loading:false})
+                    ToastAndroid.show('Error', ToastAndroid.SHORT);
+                }else if(responseJson.hasOwnProperty('success')){
+                    this.setState({loading:false});
+                    this.props.navigation.navigate('RiderLogin');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
     render() {
         const onPress = () => {console.log('pressed')};
-        return (
-            <View style={styles.container}>
-                <Text style={{fontSize:30,color:'#259cb1',marginBottom:40}}>Forgot Password</Text>
-                <Inputs
-                    ph={'Enter email to send verification code'}
-                    val={this.state.username}
-                    onChangeTexts={(value)=>{this.setState({username:value})}} />
-                <InputButtonBlue onPress={onPress} value={'Send verification code'}/>
-                <Text style={{color:'#ccc'}}>OR</Text>
-                <TouchableOpacity
-                    onPress={()=>{
-                        this.props.navigation.navigate('Login');
-                    }}
-                >
-                    <Text style={{color:'#0969aa'}}>Sign In</Text>
-                </TouchableOpacity>
-
-            </View>
-        )
+        if(this.state.sent && !this.state.reset){
+            return (
+                <View style={styles.container}>
+                    <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>Enter OTP</Text>
+                    <Inputs
+                        ph={'otp'}
+                        val={this.state.otp}
+                        onChangeTexts={(value)=>{this.setState({otp:value})}} />
+                    <InputButtonBlue loading={this.state.loading} onPress={this.verifyOtp} value={'Verify otp'}/>
+                    <Text style={{color:'#ccc'}}>OR</Text>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            this.props.navigation.navigate('Login');
+                        }}
+                    >
+                        <Text style={{color:'#000063'}}>Sign In</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }if(!this.state.sent && this.state.reset){
+            return (
+                <View style={styles.container}>
+                    <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>Reset Password</Text>
+                    <Passwords
+                        ph={'Password'}
+                        val={this.state.password}
+                        onChangeTexts={(value)=>{this.setState({password:value})}} />
+                    <Passwords
+                        ph={'Confirm Password'}
+                        val={this.state.confirmPassword}
+                        onChangeTexts={(value)=>{this.setState({confirmPassword:value})}} />
+                    <InputButtonBlue loading={this.state.loading} onPress={this.resetPassword} value={'Reset password'}/>
+                    <Text style={{color:'#ccc'}}>OR</Text>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            this.props.navigation.navigate('Login');
+                        }}
+                    >
+                        <Text style={{color:'#000063'}}>Verify</Text>
+                    </TouchableOpacity>
+    
+                </View>
+            )
+        }else if(!this.state.sent && !this.state.reset){
+            return (
+                <View style={styles.container}>
+                    <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>Forgot Password</Text>
+                    <Inputs
+                        ph={'Enter email to send verification code'}
+                        val={this.state.username}
+                        onChangeTexts={(value)=>{this.setState({username:value})}} />
+                    <InputButtonBlue loading={this.state.loading} onPress={this.forgotPassword} value={'Send verification code'}/>
+                    <Text style={{color:'#ccc'}}>OR</Text>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            this.props.navigation.navigate('Login');
+                        }}
+                    >
+                        <Text style={{color:'#000063'}}>Sign In</Text>
+                    </TouchableOpacity>
+    
+                </View>
+            )
+        }
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return{
+       //
+    };
+
+};
+const mapStateToProps = state => {
+    return {
+        host: state.auth.host
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(RiderForgot);
+
 const styles = StyleSheet.create({
     container:{
         flex: 1,

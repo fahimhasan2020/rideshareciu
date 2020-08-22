@@ -7,6 +7,9 @@ class RiderRegister extends Component {
     state = {
         username:'',
         password:'',
+        nid:'',
+        nidError:'',
+        nidErrorHeight:0,
         device_name:'android',
         usernameError:'',
         usernameErrorHeight:0,
@@ -61,6 +64,7 @@ class RiderRegister extends Component {
                     },
                     body: JSON.stringify({
                         email:this.state.username,
+                        nid:this.state.nid,
                         password:this.state.password,
                         password_confirmation:this.state.confirmPassword,
                     })
@@ -75,33 +79,7 @@ class RiderRegister extends Component {
                         }else{
                             this.setState({loading:false});
                             const host = this.props.host;
-                            return fetch(host+'rider/login',{
-                                method: 'POST',
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    username:this.state.username,
-                                    password:this.state.password,
-                                    device_name:this.state.device_name
-                                })
-                            }).then((response) => response.json())
-                                .then((responseJson) => {
-                                    if (responseJson.hasOwnProperty('errors')){
-                                        this.setState({loading:false})
-                                        ToastAndroid.show(responseJson.errors.email.toString(), ToastAndroid.SHORT);
-                                    }else{
-                                        this.setState({loading:false});
-                                        AsyncStorage.multiSet([['token', responseJson.token],['email', responseJson.user.email],['loggedIn','true']]).then(() => {
-                                            this.props.changeLogged(true);
-                                            this.props.changeAccessToken(responseJson.access_token);
-                                        });
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.log(error);
-                                });
+                            this.props.navigation.navigate("RiderLogin");
                         }
                     })
                     .catch((error) => {
@@ -110,7 +88,7 @@ class RiderRegister extends Component {
             }
         }
 
-    };
+    }
 
     render() {
         const onPress = () => {console.log('pressed')};
@@ -118,10 +96,15 @@ class RiderRegister extends Component {
             <View style={styles.container}>
                 <Text style={{fontSize:30,color:'#259cb1',marginBottom:40}}>Rider Register</Text>
                 <Inputs
-                    ph={'Username'}
+                    ph={'Email'}
                     val={this.state.username}
                     onChangeTexts={(value)=>{this.setState({username:value})}} />
                 <Text style={{color:'red',height:this.state.usernameErrorHeight}}>{this.state.usernameError}</Text>
+                <Inputs
+                    ph={'National Id'}
+                    val={this.state.nid}
+                    onChangeTexts={(value)=>{this.setState({nid:value})}} />
+                <Text style={{color:'red',height:this.state.nidErrorHeight}}>{this.state.nidError}</Text>
                 <Passwords
                     ph={'Password'}
                     val={this.state.password}

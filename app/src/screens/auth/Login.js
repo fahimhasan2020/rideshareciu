@@ -9,10 +9,14 @@ class Login extends Component {
         password:'',
         device_name:'android',
         usernameError:'',
+        otp:'',
+        otpError:'',
+        otpErrorHeight:0,
         usernameErrorHeight:0,
         passwordErrorHeight:0,
         passwordError:'',
         loading:false,
+        sent:false
     }
     onButtonPress(){
         this.setState({loading:true})
@@ -58,8 +62,8 @@ class Login extends Component {
                         }else{
                             this.setState({loading:false});
                             AsyncStorage.multiSet([['token', responseJson.token],['email', responseJson.user.email],['loggedIn','true']]).then(() => {
-                                this.props.changeLogged(true);
                                 this.props.changeAccessToken(responseJson.access_token);
+                                this.setState({sent:true})
                              });
                         }
                     })
@@ -68,15 +72,56 @@ class Login extends Component {
                     });
             }
         }
-
     };
+    verifyOtp(){
+        const host = this.props.host;
+        this.setState({loading:true})
+        return fetch(host+'user/verify/otp',{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email:this.state.username,
+                otp:this.state.otp
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson.hasOwnProperty('fault')){
+                    this.setState({loading:false})
+                    ToastAndroid.show('Wrong Otp', ToastAndroid.SHORT);
+                }else if(responseJson.hasOwnProperty('success')){
+                    this.setState({loading:false});
+                    this.props.changeLogged(true);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     render() {
-        const onPress = () => {console.log('pressed')};
+        if(this.state.sent){
+            const onPress = () => {console.log('pressed')};
+        return (
+            <View style={styles.container}>
+                <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>ENTER OTP</Text>
+                <Inputs
+                    ph={'OTP'}
+                    val={this.state.otp}
+                    onChangeTexts={(value)=>{this.setState({otp:value})}} />
+                <Text style={{color:'red',height:this.state.otpErrorHeight}}>{this.state.otpError}</Text>
+                <InputButtonBlue loading={this.state.loading} onPress={()=>{this.verifyOtp()}} value={'Verify'}/>
+            </View>
+        )
+        }else{
+            const onPress = () => {console.log('pressed')};
         return (
             <View style={styles.container}>
                 <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>LOGIN</Text>
                 <Inputs
-                    ph={'Username'}
+                    ph={'Email'}
                     val={this.state.username}
                     onChangeTexts={(value)=>{this.setState({username:value})}} />
                 <Text style={{color:'red',height:this.state.usernameErrorHeight}}>{this.state.usernameError}</Text>
@@ -109,6 +154,8 @@ class Login extends Component {
 
             </View>
         )
+        }
+        
     }
 }
 const mapDispatchToProps = dispatch => {

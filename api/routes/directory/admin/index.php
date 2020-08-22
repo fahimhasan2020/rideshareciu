@@ -52,6 +52,8 @@ Route::get('/user','HomeController@userList')->name('user.list');
 
 /*Riders*/
 Route::get('/rider','HomeController@riderList')->name('rider.list');
+Route::get('/rider/activate/{id}','HomeController@riderActivate')->name('rider.activate');
+Route::get('/rider/deactivate/{id}','HomeController@riderDeactivate')->name('rider.deactivate');
 /*Riders*/
 
 /*Mailbox*/

@@ -9,10 +9,14 @@ class RiderLogin extends Component {
         password:'',
         device_name:'android',
         usernameError:'',
+        otp:'',
+        otpError:'',
+        otpErrorHeight:0,
         usernameErrorHeight:0,
         passwordErrorHeight:0,
         passwordError:'',
         loading:false,
+        sent:false
     }
     onButtonPress(){
         this.setState({loading:true})
@@ -39,6 +43,7 @@ class RiderLogin extends Component {
                 this.setState({passwordError:'Password field should be at least 8 character'});
             }else{
                 const host = this.props.host;
+                console.log(host);
                 return fetch(host+'rider/login',{
                     method: 'POST',
                     headers: {
@@ -56,10 +61,11 @@ class RiderLogin extends Component {
                             this.setState({loading:false})
                             ToastAndroid.show(responseJson.errors.email.toString(), ToastAndroid.SHORT);
                         }else{
+                            console.log(responseJson);
                             this.setState({loading:false});
                             AsyncStorage.multiSet([['token', responseJson.token],['email', responseJson.user.email],['loggedIn','true']]).then(() => {
-                                this.props.changeLogged(true);
                                 this.props.changeAccessToken(responseJson.access_token);
+                                this.setState({sent:true})
                              });
                         }
                     })
@@ -68,15 +74,56 @@ class RiderLogin extends Component {
                     });
             }
         }
-
     };
+    verifyOtp(){
+        const host = this.props.host;
+        this.setState({loading:true})
+        return fetch(host+'rider/verify/otp',{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email:this.state.username,
+                otp:this.state.otp
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson.hasOwnProperty('fault')){
+                    this.setState({loading:false})
+                    ToastAndroid.show('Wrong Otp', ToastAndroid.SHORT);
+                }else if(responseJson.hasOwnProperty('success')){
+                    this.setState({loading:false});
+                    this.props.changeLogged(true);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     render() {
-        const onPress = () => {console.log('pressed')};
+        if(this.state.sent){
+            const onPress = () => {console.log('pressed')};
         return (
             <View style={styles.container}>
-                <Text style={{fontSize:30,color:'#259cb1',marginBottom:40}}>Rider LOGIN</Text>
+                <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>ENTER OTP</Text>
                 <Inputs
-                    ph={'Username'}
+                    ph={'OTP'}
+                    val={this.state.otp}
+                    onChangeTexts={(value)=>{this.setState({otp:value})}} />
+                <Text style={{color:'red',height:this.state.otpErrorHeight}}>{this.state.otpError}</Text>
+                <InputButtonBlue loading={this.state.loading} onPress={()=>{this.verifyOtp()}} value={'Verify'}/>
+            </View>
+        )
+        }else{
+            const onPress = () => {console.log('pressed')};
+        return (
+            <View style={styles.container}>
+                <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>Rider LOGIN</Text>
+                <Inputs
+                    ph={'Email'}
                     val={this.state.username}
                     onChangeTexts={(value)=>{this.setState({username:value})}} />
                 <Text style={{color:'red',height:this.state.usernameErrorHeight}}>{this.state.usernameError}</Text>
@@ -92,7 +139,7 @@ class RiderLogin extends Component {
                             onPress={()=>{
                                 this.props.navigation.navigate('RiderForgot')
                             }}>
-                            <Text style={{color:'#0969aa'}}>Forget password?</Text>
+                            <Text style={{color:'#000063'}}>Forget password?</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -104,17 +151,19 @@ class RiderLogin extends Component {
                         this.props.navigation.navigate('RiderRegister');
                     }}
                 >
-                    <Text style={{color:'#0969aa'}}>Sign Up</Text>
+                    <Text style={{color:'#000063'}}>Sign Up</Text>
                 </TouchableOpacity>
 
             </View>
         )
+        }
+        
     }
 }
 const mapDispatchToProps = dispatch => {
     return{
         changeAccessToken : (value) => {dispatch({type:'CHANGE_TOKEN',token: value})},
-        changeLogged : (value) => {dispatch({type:'RIDERLOGIN',logged: value})},
+        changeLogged : (value) => {dispatch({type:'LOGIN',logged: value})},
     };
 
 };
@@ -132,6 +181,6 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     property:{
-        color:'blue'
+        color:'#000063'
     },
 })

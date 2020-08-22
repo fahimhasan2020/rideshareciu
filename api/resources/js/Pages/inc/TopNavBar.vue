@@ -2,7 +2,7 @@
     <div class="topbar">
         <!-- LOGO -->
         <div class="topbar-left">
-            <inertia-link href="/admin/dashboard" class="logo"><span>Ad<span>min</span></span><i class="mdi mdi-layers"></i></inertia-link>
+            <inertia-link href="/admin/dashboard" class="logo"><span>AP<span>I</span></span><i class="mdi mdi-layers"></i></inertia-link>
         </div>
         <!-- Button mobile view to collapse sidebar menu -->
         <div class="navbar navbar-default" role="navigation">

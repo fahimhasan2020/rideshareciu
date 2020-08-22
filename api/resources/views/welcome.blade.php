@@ -75,6 +75,9 @@
                 <div class="title m-b-md">
                    Ride Share System
                 </div>
+                <div class="m-b-md">
+                  by Sarah and Samreena
+                </div>
             </div>
         </div>
     </body>

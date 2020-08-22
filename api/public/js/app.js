@@ -18329,7 +18329,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /media/fahim/31CD2700401AFC391/projects/rideshare/api/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /media/fahim/31CD2700401AFC392/projects/rideshare/api/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
