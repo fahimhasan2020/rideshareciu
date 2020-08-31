@@ -5,3 +5,7 @@ Route::post('/register','UserAuthenticationController@register')->name('post-reg
 Route::post('/verify/otp','UserAuthenticationController@verifyOtp')->name('post-verify-otp');
 Route::post('/reset/password/otp','UserAuthenticationController@verifyUserOtp')->name('post-verify-user-otp');
 Route::post('reset/password/string','UserAuthenticationController@resetPasswordString')->name('post-reset-user-password');
+Route::post('add/location','HomeController@addLocation')->name('add-location');
+Route::post('get/info','HomeController@getInfo')->name('getinfo');
+Route::post('save/info','HomeController@saveInfo')->name('saveInfo');
+Route::post('update/dp','HomeController@updateDp')->name('update-dp');

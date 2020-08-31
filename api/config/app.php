@@ -170,6 +170,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         \Torann\GeoIP\GeoIPServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -237,6 +238,7 @@ return [
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

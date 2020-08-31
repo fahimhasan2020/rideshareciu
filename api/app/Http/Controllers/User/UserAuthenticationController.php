@@ -17,6 +17,7 @@ class UserAuthenticationController extends Controller
         $request->validate([
             'email'=>'required|email|unique:subscriber',
             'password'=>'required|min:8|confirmed',
+            'nid'=>'required|unique:subscriber'
         ]);
         $user = Subscriber::create([
             'first_name' => $request->first_name,
@@ -32,6 +33,7 @@ class UserAuthenticationController extends Controller
             return response()->json(['fault'=>'Something went wrong. Try again later'],500);
         }
     }
+    
     public function login(Request $request)
     {
         $this->validate($request, [

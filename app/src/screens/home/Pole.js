@@ -37,6 +37,9 @@ elevation: 5,}}>
       query={{
         key: 'AIzaSyAwyZimvA9z_SzFmL55fpJSoeYrloU6RF4',
         language: 'en',
+        location: '22.3258742,91.6797787',                                        radius: '30000', 
+        components: 'country:bd',
+        strictbounds: true,
       }}
 
     placeholder='Enter Start Location'
@@ -69,6 +72,9 @@ elevation: 5,}}>
       query={{
         key: 'AIzaSyAwyZimvA9z_SzFmL55fpJSoeYrloU6RF4',
         language: 'en',
+        location: '22.3258742,91.6797787',                                        radius: '30000', 
+        components: 'country:bd',
+        strictbounds: true,
       }}
 
     placeholder='Enter End Location'

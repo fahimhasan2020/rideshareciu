@@ -75,6 +75,7 @@ class RiderLogin extends Component {
             }
         }
     };
+    
     verifyOtp(){
         const host = this.props.host;
         this.setState({loading:true})
@@ -163,7 +164,7 @@ class RiderLogin extends Component {
 const mapDispatchToProps = dispatch => {
     return{
         changeAccessToken : (value) => {dispatch({type:'CHANGE_TOKEN',token: value})},
-        changeLogged : (value) => {dispatch({type:'LOGIN',logged: value})},
+        changeLogged : (value) => {dispatch({type:'RIDERLOGIN',logged: value})},
     };
 
 };

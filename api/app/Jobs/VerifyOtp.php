@@ -40,6 +40,7 @@ class VerifyOtp implements ShouldQueue
      *
      * @return void
      */
+    
     public function handle()
     {
         $number = rand(256984,999999);
@@ -53,7 +54,7 @@ class VerifyOtp implements ShouldQueue
             try{
                 $soapClient = new SoapClient("https://api2.onnorokomSMS.com/sendSMS.asmx?wsdl");
                 $paramArray = array(
-                    'apiKey' => "8ff519ad-2eda-4482-aaa3-30c5bbe8db59",
+                    'apiKey' => "e137e9a0-0b65-41b0-b076-64b2efcc49ef",
                     'messageText' => $message,
                     'numberList' => $this->phone,
                     'smsType' => "TEXT",

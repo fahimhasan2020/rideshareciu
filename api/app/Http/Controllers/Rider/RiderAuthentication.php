@@ -98,7 +98,7 @@ class RiderAuthentication extends Controller
             'email'=>'required'
         ]);
         $id = Rider::where('email', $request->email)->first();
-        $last = DB::table('user_otp')->where('user_id',$id->id)->orderBy('id', 'DESC')->first();
+        $last = DB::table('rider_otp')->where('user_id',$id->id)->orderBy('id', 'DESC')->first();
         if($request->otp == $last->otp){
             return response()->json(['success'=>'Success']);;
         }else{

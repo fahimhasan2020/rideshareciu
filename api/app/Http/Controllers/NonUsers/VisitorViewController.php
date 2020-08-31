@@ -21,4 +21,8 @@ class VisitorViewController extends Controller
         $birds = BirdCount::all();
         return $birds;
     }
+
+    public function addLocation(Request $request){
+        
+    }
 }

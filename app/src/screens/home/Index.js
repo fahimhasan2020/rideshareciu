@@ -5,6 +5,7 @@ import {createDrawerNavigator} from "react-navigation-drawer";
 import { connect } from 'react-redux'
 import store from "../../store/store";
 import {Divider,Avatar} from "react-native-elements";
+import AddLocation from "./AddLocation"
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { flipY,fromRight } from 'react-navigation-transitions';
 import {createStackNavigator} from 'react-navigation-stack'
@@ -26,6 +27,7 @@ import Searching from "./Searching"
 import RiderContents from "../rider/home/RiderContents";
 import Profile from "../profile/Profile"
 import Info from "../profile/Info"
+import EditProfile from "../profile/EditProfile"
 import Settings from "../profile/Settings"
 import Faq from "../profile/Faq"
 import { FontAwesome } from '@expo/vector-icons';
@@ -105,6 +107,22 @@ const StackTwo = createStackNavigator({
         },
         headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Ride',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    EditProfile:{screen: EditProfile,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
+        headerTitle:'EditProfile',
         headerTitleStyle:{
             color:'#ccc',
             fontSize:20,
@@ -201,6 +219,22 @@ const StackTwo = createStackNavigator({
         },
         headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'FAQ',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    AddLocation:{screen:AddLocation,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
+        headerTitle:'Add New Location',
         headerTitleStyle:{
             color:'#ccc',
             fontSize:20,

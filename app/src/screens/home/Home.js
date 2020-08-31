@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import {Inputs,Passwords,InputButtonBlue,InputButtonRed} from "../../components/ui/Inputs";
 import Geocoder from 'react-native-geocoding';
 
 class Home extends Component {
@@ -62,6 +63,18 @@ class Home extends Component {
                             </Text>
                         </Body>
                     </CardItem>
+                </Card>
+                <Card>
+                <TouchableOpacity
+                    onPress={()=>{this.props.navigation.navigate("AddLocation")}}>
+                    <CardItem>
+                        <Body>
+                            <Text style={{color:'#838383'}}>
+                                Setup prefered locations
+                            </Text>
+                        </Body>
+                     </CardItem>
+                    </TouchableOpacity>
                 </Card>
                 <View style={styles.cardSection}>
                     <TouchableOpacity style={styles.options}

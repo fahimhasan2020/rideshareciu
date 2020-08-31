@@ -4,6 +4,7 @@ import { Text, StyleSheet, View,TouchableOpacity,ToastAndroid } from 'react-nati
 import AsyncStorage from '@react-native-community/async-storage';
 import {Inputs,Passwords,InputButtonBlue} from "../../components/ui/Inputs";
 class Login extends Component {
+    
     state = {
         username:'',
         password:'',

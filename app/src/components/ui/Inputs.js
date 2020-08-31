@@ -282,6 +282,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: '#ff534a',
     },
+    
     buttonGreenOutLine:{
         alignItems: "center",
         width:250,

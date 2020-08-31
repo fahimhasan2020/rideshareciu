@@ -28,7 +28,7 @@ class CreateRider extends Migration
             $table->boolean('suspended')->default(false);
             $table->boolean('blocked')->default(false);
             $table->boolean('deactivated')->default(false);
-            $table->dateTime('date_of_birth')->nullable();
+            $table->string('date_of_birth')->nullable();
             $table->string('phone_number')->nullable()->unique();
             $table->string('remember_token')->nullable();
             $table->timestamps();
