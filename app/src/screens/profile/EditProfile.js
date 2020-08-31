@@ -159,6 +159,7 @@ export class Profile extends Component {
                 <Card>
                     <CardItem>
                         <Body>
+                        <Text>Date of Birth</Text>
                             <DatePicker
             defaultDate={new Date(2020, 1, 9)}
             minimumDate={new Date(1950, 1, 1)}
@@ -184,7 +185,7 @@ export class Profile extends Component {
                         </Body>
                     </CardItem>
                 </Card>
-                <Card>
+                {/* <Card>
                     <CardItem>
                         <Body>
                         <InputButtonBlue onPress={()=>{this.setState({modalVisible:true})}}   value={'Upload image'} icon={'camera'} />
@@ -215,7 +216,7 @@ export class Profile extends Component {
                         <InputButtonRed   value={'Save image'} icon={'cloud-upload'} onPress={()=>{this.saveDp()}}  />
                         </Body>
                     </CardItem>
-                </Card>
+                </Card> */}
             </ScrollView>
         )
     }
