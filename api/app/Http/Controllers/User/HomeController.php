@@ -75,4 +75,14 @@ class HomeController extends Controller
         //     return response()->json(['Success'=>'Image not found'],500);
         // }
     }
+
+    public function savedLocations(Request $request)
+    {
+        $request->validate([
+            'email'=>'required',
+        ]);
+        $user = Subscriber::where('email',$request->email)->first();
+        $locations = SavedPlaces::where('User_id',$user->id)->get();
+        return $locations;
+    }
 }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import {Text, StyleSheet, ScrollView,View,TouchableOpacity,Image,Modal,TouchableHighlight,Alert,ToastAndroid} from 'react-native'
+import {Text, StyleSheet, ScrollView,View,TouchableOpacity,Image,Modal,TouchableHighlight,FlatList,Alert,ToastAndroid} from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import {  Card, CardItem, Body,Fab,Button } from 'native-base';
 import {Divider, Input} from "react-native-elements";
+import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux'
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
@@ -18,8 +19,36 @@ class Home extends Component {
         active:false,
         modalVisible:false,
         invitationCode:'',
+        locations:[]
     };
-    componentDidMount() {
+    componentDidMount=async()=> {
+
+        const value = await AsyncStorage.getItem('email')
+      if(value !== null) {
+        this.setState({email:value});
+        fetch(this.props.host+'user/get/saved/locations',{
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              email:this.state.email,
+          })
+      }).then((response) => response.json())
+      .then((responseJson) => {
+          if (responseJson.hasOwnProperty('errors')){
+             
+          }else{
+            this.setState({locations:responseJson});
+            console.log(responseJson);
+          }
+      })
+      .catch((error) => {
+          console.log(error);
+      })}
+
+
         if (Platform.OS === 'android' && !Constants.isDevice) {
             this.setState({
                 errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -27,6 +56,7 @@ class Home extends Component {
         } else {
             this._getLocationAsync();
         }
+
     }
     _getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -64,6 +94,7 @@ class Home extends Component {
                         </Body>
                     </CardItem>
                 </Card>
+            
                 <Card>
                 <TouchableOpacity
                     onPress={()=>{this.props.navigation.navigate("AddLocation")}}>
@@ -233,9 +264,11 @@ const styles = StyleSheet.create({
         height: 40,
     }
 });
-const mapStateToProps = (state) => ({
-
-});
+const mapStateToProps = state => {
+    return {
+      host: state.auth.host
+    }
+};
 const mapDispatchToProps = {
 
 };

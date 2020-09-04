@@ -1,13 +1,21 @@
-import React, { Component } from 'react'
-import { View, Text,StyleSheet,Dimensions,TouchableOpacity } from 'react-native'
+import React, { Component,useRef } from 'react'
+import { View, Text,StyleSheet,Dimensions,TouchableOpacity,Modal,TouchableHighlight,FlatList,ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { Constants } from 'expo';
+import { FontAwesome } from '@expo/vector-icons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {  Card, CardItem, Body,Fab,Button } from 'native-base';
 import MapView from 'react-native-maps';
-export class Ride extends Component {
-    state={
+import AsyncStorage from '@react-native-community/async-storage';
 
+
+
+
+class Ride extends Component {
+    state={
+      bottomSheet:false,
+      email:'',
+      locations:[]
     }
     onStartSet(location){
         this.props.changeStartLocation(location)
@@ -15,6 +23,34 @@ export class Ride extends Component {
     onEndSet(location){
         this.props.changeEndLocation(location)
     }
+
+    componentDidMount = async() =>{
+      const value = await AsyncStorage.getItem('email')
+      if(value !== null) {
+        this.setState({email:value});
+        fetch(this.props.host+'user/get/saved/locations',{
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              email:this.state.email,
+          })
+      }).then((response) => response.json())
+      .then((responseJson) => {
+          if (responseJson.hasOwnProperty('errors')){
+             
+          }else{
+            this.setState({locations:responseJson});
+            console.log(responseJson);
+          }
+      })
+      .catch((error) => {
+          console.log(error);
+      })}
+    }
+
     render() {
         return (
 <View>
@@ -97,6 +133,49 @@ elevation: 5,}}>
     },
   }}
     />
+    <Text style={{alignSelf:'center',color:'#adadad'}}>OR</Text>
+    <TouchableOpacity
+    onPress={()=>{this.setState({bottomSheet:true})}}
+    style={{justifyContent:'center',alignItems:'center',marginBottom:10,color:'#adadad'}}>
+    <Text style={{color:'#adadad'}}>Choose from saved locations</Text>
+    </TouchableOpacity> 
+    <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={this.state.bottomSheet}
+                            >
+                              <View style={{ height: 300,justifyContent: "center",
+      alignItems: "center",
+      marginTop: 122, width:300,backgroundColor:'white',marginLeft:30 }}>
+                                <ScrollView>
+                                <View onStartShouldSetResponder={() => true}>
+                                  <FlatList
+            data={this.state.locations}
+            keyExtractor={item => new Date()+Math.random()}
+            renderItem={({ item }) => <View style={{marginTop:10,backgroundColor:'gray',padding:10,width:250}}><TouchableOpacity
+            onPress={()=>{ this.onEndSet(item.formatted_address);this.setState({bottomSheet:false});}}
+            style={styles.oppo}>
+              <FontAwesome name="map-marker" style={{color:'red'}} size={20} />
+              <Text>{item.formatted_address}</Text>
+            
+        </TouchableOpacity></View>}
+          />
+                
+                                </View>
+                                
+                                </ScrollView>
+                                <TouchableHighlight
+                                            style={{position:'absolute',top:10,right:10}}
+                                            onPress={() => {
+                                                this.setState({bottomSheet:false})
+                                            }}
+                                        >
+                                            <FontAwesome name={'times'}  />
+                                        </TouchableHighlight>
+                                </View>
+                               
+                            </Modal>
+
     <TouchableOpacity
     onPress={()=>{this.props.navigation.navigate('Searching')}}
     style={{padding:10,backgroundColor:'red',justifyContent:'center',alignItems:'center'}}>
@@ -116,7 +195,46 @@ elevation: 5,}}>
 const styles = StyleSheet.create({
     container:{
         backgroundColor:'#eee'
-    }
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 15,
+    height:300
+},
+flatList:{
+  flex:1,
+  height:100,
+  alignItems:'flex-start',
+  justifyContent:'flex-start',
+  width:"100%",
+  borderBottomWidth:1,
+  borderBottomColor:'#eee',
+  padding:15,
+  paddingLeft:35,
+  flexDirection:'row'
+},
+oppo:{
+  flex:1,
+  flexDirection:'row',
+  marginTop:10
+}
 })
 
 
@@ -130,7 +248,7 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
     return {
-       //
+      host: state.auth.host
     }
 };
 

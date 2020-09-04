@@ -9,3 +9,4 @@ Route::post('add/location','HomeController@addLocation')->name('add-location');
 Route::post('get/info','HomeController@getInfo')->name('getinfo');
 Route::post('save/info','HomeController@saveInfo')->name('saveInfo');
 Route::post('update/dp','HomeController@updateDp')->name('update-dp');
+Route::post('get/saved/locations','HomeController@savedLocations')->name('get-saved-locations');
