@@ -33,6 +33,11 @@ import Faq from "../profile/Faq"
 import { FontAwesome } from '@expo/vector-icons';
 
 class Index extends Component {
+
+    componentDidMount(){
+        console.disableYellowBox = true;
+    }
+
     render() {
         if (this.props.loggedIn === false){
             return <NonLoggedIn />

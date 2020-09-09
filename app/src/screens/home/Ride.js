@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Constants } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import {  Card, CardItem, Body,Fab,Button } from 'native-base';
+import {  Card, CardItem, Body,Fab,Button,Icon,Picker } from 'native-base';
 import MapView from 'react-native-maps';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -15,8 +15,20 @@ class Ride extends Component {
     state={
       bottomSheet:false,
       email:'',
-      locations:[]
+      locations:[],
+      selected:undefined
     }
+
+
+    onValueChange(value) {
+      this.setState({
+        selected: value
+      });
+      this.props.changeCar(value);
+    }
+
+  
+
     onStartSet(location){
         this.props.changeStartLocation(location)
     }
@@ -67,7 +79,7 @@ elevation: 5,}}>
         <Text>Find location</Text>
         <GooglePlacesAutocomplete
       onPress={(data, details = null) => {
-        this.onStartSet(data.description);
+        this.onStartSet(data);
       }}
       query={{
         key: 'AIzaSyAwyZimvA9z_SzFmL55fpJSoeYrloU6RF4',
@@ -101,7 +113,7 @@ elevation: 5,}}>
     />
     <GooglePlacesAutocomplete
       onPress={(data, details = null) => {
-        this.onEndSet(data.description);
+        this.onEndSet(data);
       }}
       query={{
         key: 'AIzaSyAwyZimvA9z_SzFmL55fpJSoeYrloU6RF4',
@@ -175,6 +187,21 @@ elevation: 5,}}>
                                 </View>
                                
                             </Modal>
+                            <Text style={{color:'#adadad'}}>Add Vehicle Type:</Text>
+                            <Picker
+              mode="dropdown"
+              iosIcon={<Icon name="arrow-down" />}
+              placeholder="Select vahicle type"
+              placeholderStyle={{ color: "#bfc6ea" }}
+              placeholderIconColor="#007aff"
+              style={{ width: 300 }}
+              selectedValue={this.state.selected}
+              onValueChange={this.onValueChange.bind(this)}
+            >
+              <Picker.Item label="Bike" value="Bike" />
+              <Picker.Item label="Car" value="Car" />
+              <Picker.Item label="Taxi" value="Taxi" />
+            </Picker>
 
     <TouchableOpacity
     onPress={()=>{this.props.navigation.navigate('Searching')}}
@@ -243,6 +270,7 @@ const mapDispatchToProps = dispatch => {
     return{
         changeStartLocation : (value) => {dispatch({type:'CHANGE_START_LAT',point: value})},
         changeEndLocation : (value) => {dispatch({type:'CHANGE_END_LAT',point: value})},
+        changeCar : (value) => {dispatch({type:'CHANGE_CAR',point: value})},
     };
 
 };

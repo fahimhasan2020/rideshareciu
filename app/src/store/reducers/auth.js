@@ -12,7 +12,11 @@ const data = {
     'startPointLat':'',
     'startPointLng':'',
     'endPointLat':'',
-    'endPointLng':''
+    'endPointLng':'',
+    'distance':0,
+    'vehicleType':'',
+    'startPlaceId':'',
+    'endPlaceId':''
 };
 
 const reducer = (state = data, action) => {
@@ -54,15 +58,24 @@ const reducer = (state = data, action) => {
         case 'CHANGE_START_LAT':
             return {
                 ...state,
-                startPoint: action.point,
+                startPoint: action.point.description,
+                startPlaceId:action.point.place_id
             };
         case 'CHANGE_END_LAT':
             return {
                 ...state,
-                endPoint: action.point,
+                endPoint: action.point.description,
+                endPlaceId:action.point.place_id
+            };
+        case 'CHANGE_CAR':
+            return {
+                ...state,
+                vehicleType: action.point
             };
         default:
             return state;
     }
 };
+
+
 export default reducer;
