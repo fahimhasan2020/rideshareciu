@@ -28,7 +28,12 @@ class CreateRider extends Migration
             $table->boolean('suspended')->default(false);
             $table->boolean('blocked')->default(false);
             $table->boolean('deactivated')->default(false);
+            $table->integer('online')->default(1);
+            $table->integer('dues')->default(0);
             $table->string('date_of_birth')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('vehicle_type')->nullable();
             $table->string('phone_number')->nullable()->unique();
             $table->string('remember_token')->nullable();
             $table->timestamps();

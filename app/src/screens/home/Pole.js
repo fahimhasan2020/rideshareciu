@@ -1,18 +1,21 @@
 import React, { Component,useRef } from 'react'
-import { View, Text,StyleSheet,Dimensions,TouchableOpacity,Modal,TouchableHighlight,FlatList,ScrollView } from 'react-native'
+import { View, Text,StyleSheet,Dimensions,TouchableOpacity,Modal,TouchableHighlight,FlatList,ScrollView,ToastAndroid } from 'react-native'
 import { connect } from 'react-redux'
 import { Constants } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {  Card, CardItem, Body,Fab,Button,Icon,Picker } from 'native-base';
 import MapView from 'react-native-maps';
+import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-community/async-storage';
 export class Pole extends Component {
   state={
     bottomSheet:false,
     email:'',
     locations:[],
-    selected:undefined
+    selected:'car',
+    start:'',
+    end:''
   }
 
 
@@ -24,13 +27,25 @@ export class Pole extends Component {
   }
 
   onStartSet(location){
+      this.setState({start:location});
       this.props.changeStartLocation(location)
   }
   onEndSet(location){
+      this.setState({end:location});
       this.props.changeEndLocation(location)
   }
 
+  callRider = () =>{
+    if(this.state.start !== ''&& this.state.end !== ''){
+      this.props.navigation.navigate('Searching');}else{
+      ToastAndroid.show("Add locations first", ToastAndroid.SHORT);
+    }
+    
+  }
+
   componentDidMount = async() =>{
+    this.props.changeCar('car');
+      this.props.changeType('pole');
     const value = await AsyncStorage.getItem('email')
     if(value !== null) {
       this.setState({email:value});
@@ -60,7 +75,7 @@ export class Pole extends Component {
         return (
 <View>
 
-    <View style={{width:300,padding:10,margin:15,position:'absolute',top:150,left:10,backgroundColor:'#fff',zIndex:10,shadowColor: "#000",
+    <View style={{width:300,padding:10,margin:15,position:'absolute',top:50,left:10,backgroundColor:'#fff',zIndex:10,shadowColor: "#000",
 shadowOffset: {
 	width: 0,
 	height: 2,
@@ -69,7 +84,7 @@ shadowOpacity: 0.25,
 shadowRadius: 3.84,
 
 elevation: 5,}}>
-        <Text>Find location</Text>
+        <Text style={{alignSelf:'center',marginBottom:20,fontSize:20}}>Find Location</Text>
         <GooglePlacesAutocomplete
       onPress={(data, details = null) => {
         console.log(data, details);
@@ -89,16 +104,14 @@ elevation: 5,}}>
     returnKeyType={'default'}
     styles={{
     textInputContainer: {
-      backgroundColor: 'blue',
-      borderTopWidth: 0,
-      borderBottomWidth: 1,
+      marginBottom:20,
+      backgroundColor:'#560027',
+      borderRadius:15,
+      width:200,
+      alignSelf:'center'
     },
     textInput: {
-      marginLeft: 0,
-      marginRight: 0,
-      height: 38,
-      color: '#5d5d5d',
-      fontSize: 16,
+     
     },
     predefinedPlacesDescription: {
       color: '#1faadb',
@@ -124,16 +137,14 @@ elevation: 5,}}>
     returnKeyType={'default'}
     styles={{
     textInputContainer: {
-      backgroundColor: 'blue',
-      borderTopWidth: 0,
-      borderBottomWidth: 1,
+      marginBottom:20,
+     backgroundColor:'#560027',
+     borderRadius:15,
+     width:200,
+     alignSelf:'center'
     },
     textInput: {
-      marginLeft: 0,
-      marginRight: 0,
-      height: 38,
-      color: '#5d5d5d',
-      fontSize: 16,
+     
     },
     predefinedPlacesDescription: {
       color: '#1faadb',
@@ -181,25 +192,32 @@ elevation: 5,}}>
                                 </View>
                                
                             </Modal>
-                            <Text style={{color:'#adadad'}}>Add Vehicle Type:</Text>
-                            <Picker
+                            <Text style={{color:'#adadad',alignSelf:'center'}}>Add Vehicle Type:</Text>
+                            <View style={{borderWidth:1,borderRadius:9,paddingRight:10,
+                borderColor: "#adadad", marginLeft:40,marginRight:38,marginBottom:10,}}>
+                               <Picker
               mode="dropdown"
               iosIcon={<Icon name="arrow-down" />}
               placeholder="Select vahicle type"
               placeholderStyle={{ color: "#bfc6ea" }}
               placeholderIconColor="#007aff"
-              style={{ width: 300 }}
+              style={{width: 180,alignSelf:'center', }}
               selectedValue={this.state.selected}
               onValueChange={this.onValueChange.bind(this)}
             >
-              <Picker.Item label="Bike" value="Bike" />
-              <Picker.Item label="Car" value="Car" />
-              <Picker.Item label="Taxi" value="Taxi" />
+              <Picker.Item label="Car" value="car" />
+              <Picker.Item label="Mini Microbus" value="micro mini" />
+              <Picker.Item label="Big Microbus" value="micro big" />
             </Picker>
+                            </View>
+                            
     <TouchableOpacity
-    onPress={()=>{this.props.navigation.navigate('Searching')}}
-    style={{padding:10,backgroundColor:'red',justifyContent:'center',alignItems:'center'}}>
-        <Text style={{color:'white'}}>Find rider</Text>
+    onPress={()=>{this.callRider()}}
+    style={{alignItems:'center'}}>
+        <LinearGradient
+        colors={['#800039', '#560027']}
+        style={{width:200,borderRadius:15,padding: 10,borderRadius: 15, paddingLeft:20,paddingRight:20,shadowColor: "#000",shadowOffset: {width: 0,height:3,},shadowOpacity: 0.27,shadowRadius: 4.65,elevation: 6,alignItems:'center'}}>
+    <Text style={{backgroundColor: 'transparent',fontSize: 13,color: '#fff',alignSelf:'center'}}>FIND RIDER</Text></LinearGradient>
     </TouchableOpacity>
     </View>
     <View style={{width:300,padding:10,margin:15,position:'absolute',top:450,left:10,backgroundColor:'#fff',zIndex:10,shadowColor: "#000",
@@ -276,6 +294,7 @@ const mapDispatchToProps = dispatch => {
         changeStartLocation : (value) => {dispatch({type:'CHANGE_START_LAT',point: value})},
         changeEndLocation : (value) => {dispatch({type:'CHANGE_END_LAT',point: value})},
         changeCar : (value) => {dispatch({type:'CHANGE_CAR',point: value})},
+        changeType:(value)=>{dispatch({type:'CHANGE_Type',point:value})}
     };
 
 };

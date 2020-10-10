@@ -27,7 +27,9 @@
                             <li><inertia-link href="/admins/rider">Rider</inertia-link></li>
                         </ul>
                     </li><!----------Users------------>
-
+                    <li>
+                        <inertia-link href="/admins/coupons"><i class="mdi mdi-more"></i><span> Coupons </span></inertia-link>
+                    </li>
                     <li class="menu-title">Marketing</li>
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-share"></i><span> Social site </span> <span class="menu-arrow"></span></a>
@@ -43,8 +45,8 @@
             <div class="clearfix"></div>
             <div class="help-box">
                 <h5 class="text-muted m-t-0">For Help ?</h5>
-                <p class=""><span class="text-custom">Email:</span> <br/> fahim@bizbrainers.com</p>
-                <p class="m-b-0"><span class="text-custom">Call:</span> <br/> (+880) 171 143 2259</p>
+                <p class=""><span class="text-custom">Email:</span> <br/> samreenaalam9558@gmail.com</p>
+                <p class="m-b-0"><span class="text-custom">Call:</span> <br/> (+880) 170 536 6238</p>
             </div>
         </div>
         <!-- Sidebar -left -->

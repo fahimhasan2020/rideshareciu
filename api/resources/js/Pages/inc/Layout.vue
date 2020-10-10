@@ -5,7 +5,7 @@
             <sidy></sidy>
             <slot />
             <footer class="footer text-right bg-white">
-                Copyright © 2020 demo site , developed by Biz Brainers.
+                Copyright © 2020 rideshare , developed by Samreena Alam.
             </footer>
         </div>
     </div>

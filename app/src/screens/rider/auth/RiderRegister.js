@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import {Text, StyleSheet, View, TouchableOpacity, ToastAndroid} from 'react-native'
+import {Text, StyleSheet, View, TouchableOpacity, ToastAndroid,Dimensions} from 'react-native'
 import {Inputs,Passwords,InputButtonBlue} from "../../../components/ui/Inputs";
 import AsyncStorage from "@react-native-community/async-storage";
 import {connect} from "react-redux";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 class RiderRegister extends Component {
     state = {
         username:'',
@@ -94,7 +97,17 @@ class RiderRegister extends Component {
         const onPress = () => {console.log('pressed')};
         return (
             <View style={styles.container}>
-                <Text style={{fontSize:30,color:'#259cb1',marginBottom:40}}>Rider Register</Text>
+                 <TouchableOpacity
+                style={{position:'absolute',top:20,left:20}} 
+                onPress={()=>{this.props.navigation.navigate('RiderLogin')}}
+                >
+                <Icon  name={'angle-left'} size={30} color="white"/>
+                </TouchableOpacity>
+               <View style={{height:Dimensions.get('window').height*0.15,paddingTop:50,alignSelf:'flex-end',paddingRight:50}}>
+                   
+                <Animatable.Text animation="bounceIn" delay={1000} style={{fontSize:30,color:'#000063',marginBottom:40}}>RIDER REGISTER</Animatable.Text>
+                </View>
+                <Animatable.View animation="slideInUp" style={{alignItems:'center',backgroundColor:'#ffffff',width:'100%',height:Dimensions.get('window').height*0.85,paddingTop:150,borderTopLeftRadius:50,borderTopRightRadius:50}}>
                 <Inputs
                     ph={'Email'}
                     val={this.state.username}
@@ -127,7 +140,7 @@ class RiderRegister extends Component {
                 >
                     <Text style={{color:'#0969aa'}}>Sign In</Text>
                 </TouchableOpacity>
-
+                </Animatable.View>
             </View>
         )
     }
@@ -151,7 +164,8 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        backgroundColor:'#e6b54c',
     },
     property:{
         color:'blue'

@@ -13,12 +13,23 @@ class Loading extends Component {
         let valu =   await AsyncStorage.getItem("loggedIn");
         if(valu !== null){
             if(valu === 'true'){
-                setTimeout(()=>{
-                    this.setState({
-                        visible: !this.state.visible
-                    });
-                    this.props.changeState(true)
-                }, 5000);
+                let riderCheck = await AsyncStorage.getItem("riderLoggedIn");
+                console.log(riderCheck)
+                if(riderCheck !== null && riderCheck === 'true'){
+                    setTimeout(()=>{
+                        this.setState({
+                            visible: !this.state.visible
+                        });
+                        this.props.changeToRider(true)
+                    }, 5000);
+                }else{
+                    setTimeout(()=>{
+                        this.setState({
+                            visible: !this.state.visible
+                        });
+                        this.props.changeState(true)
+                    }, 5000);
+                }
             }
             else if (valu === 'false'){
                 this.props.changeState(false);
@@ -56,6 +67,7 @@ const mapDispatchToProps = dispatch => {
     return{
         changeLogged : (value) => {dispatch({type:'LOGOUT',logged: value})},
         changeState : (value) => {dispatch({type:'SETSTATE',stata: value})},
+        changeToRider : (value) => {dispatch({type:'RIDERLOGIN',logged: value})},
     };
 };
 

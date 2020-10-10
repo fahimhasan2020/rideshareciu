@@ -8,5 +8,12 @@ Route::post('reset/password/string','UserAuthenticationController@resetPasswordS
 Route::post('add/location','HomeController@addLocation')->name('add-location');
 Route::post('get/info','HomeController@getInfo')->name('getinfo');
 Route::post('save/info','HomeController@saveInfo')->name('saveInfo');
+Route::post('location/update','HomeController@locationUpdate')->name('update-location');
 Route::post('update/dp','HomeController@updateDp')->name('update-dp');
+Route::post('coupon/list','HomeController@couponList')->name('coupon-list');
 Route::post('get/saved/locations','HomeController@savedLocations')->name('get-saved-locations');
+Route::post('check/coupon','HomeController@checkCoupon')->name('check-coupon');
+Route::post('update/device/token','HomeController@updateDeviceToken')->name('update-token');
+Route::post('post/ride','HomeController@postRide')->name('post-ride');
+Route::post('rider/accepted/check','HomeController@riderAccepted')->name('rider-accepted');
+Route::post('view/rider','HomeController@viewRider')->name('view-rider');

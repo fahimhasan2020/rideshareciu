@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { Text, StyleSheet, View,TouchableOpacity,ToastAndroid,Image } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage';
+import { Text, StyleSheet, View,TouchableOpacity,ToastAndroid,Image,Dimensions } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 import {Inputs, Passwords, InputButtonBlue, InputButtonRed} from "../../components/ui/Inputs";
 class Login extends Component {
     state = {
@@ -18,14 +20,28 @@ class Login extends Component {
         const onPress = () => {console.log('pressed')};
         return (
             <View style={styles.container}>
-                <Image
+                <View style={{height:Dimensions.get('window').height*0.30,paddingTop:40, paddingRight:30,alignSelf:'flex-end'}}>
+                    <Animatable.Image animation="bounceIn" delay={500}
                     style={styles.tinyLogo}
                     source={require('../../../assets/icon.png')}
                 />
-
-                <Text style={{fontSize:20,color:'#000063',marginBottom:40}}>RIDE SHARE</Text>
-                <InputButtonBlue icon={'user-circle'} onPress={()=>{this.props.navigation.navigate('Login')}} value={'USER PANEL'}/>
-                <InputButtonRed icon={'cab'} onPress={()=>{this.props.navigation.navigate('RiderLogin')}} value={'RIDER PANEL'}/>
+                <Text style={{fontSize:25,color:'#728d96',marginBottom:40,marginLeft:5}}>RIDE SHARE</Text>
+                </View>
+                <Animatable.View animation="slideInUp" style={{width:'100%',height:Dimensions.get('window').height*0.70,alignItems:'center',paddingTop:100,borderTopLeftRadius:50,borderTopRightRadius:50,backgroundColor:'#ffffff'}}>
+                    <TouchableOpacity
+        onPress={()=>{this.props.navigation.navigate('Login')}}>
+   <LinearGradient
+        colors={['#0000cc', '#000063']}
+        style={{ padding: 10, alignItems: 'center', borderRadius: 15, flexDirection:'row',paddingLeft:20,paddingRight:20,shadowColor: "#000",shadowOffset: {width: 0,height:3,},shadowOpacity: 0.27,shadowRadius: 4.65,elevation: 6, }}>
+         <Icon  name={'user-circle'} size={15} color="white"/>
+    <Text style={{backgroundColor: 'transparent',fontSize: 13,color: '#fff',marginLeft:10}}>USER PANEL</Text></LinearGradient></TouchableOpacity>
+    <TouchableOpacity style={{marginTop:30}} onPress={()=>{this.props.navigation.navigate('RiderLogin')}}>
+    <LinearGradient
+        colors={['#800039', '#560027']}
+        style={{ padding: 10, alignItems: 'center', borderRadius: 15, flexDirection:'row',paddingLeft:20,paddingRight:20,shadowColor: "#000",shadowOffset: {width: 0,height:3,},shadowOpacity: 0.27,shadowRadius: 4.65,elevation: 6, }}>
+         <Icon  name={'cab'} size={15} color="white"/>
+    <Text style={{backgroundColor: 'transparent',fontSize: 13,color: '#fff',marginLeft:10}}>RIDER PANEL</Text></LinearGradient></TouchableOpacity>
+                </Animatable.View>
             </View>
         )
     }
@@ -48,11 +64,12 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        backgroundColor:'#e6b54c',
     },
     tinyLogo: {
-        width: 150,
-        height: 150,
+        width: 120,
+        height: 120,
     },
     property:{
         color:'blue'

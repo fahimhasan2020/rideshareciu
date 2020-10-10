@@ -15,6 +15,13 @@ class CreateRide extends Migration
     {
         Schema::create('ride', function (Blueprint $table) {
             $table->id();
+            $table->string('starting_cordinate');
+            $table->string('ending_cordinate');
+            $table->integer('rent');
+            $table->string('user_id');
+            $table->string('rider_id')->nullable();
+            $table->integer('ratings')->nullable();
+            $table->integer('completed')->default(0);
             $table->timestamps();
         });
     }

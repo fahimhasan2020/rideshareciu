@@ -6,15 +6,19 @@ use App\Events\AdminChatMessage;
 use App\Http\Controllers\Controller;
 use App\Model\VerifyOtp;
 use App\Model\VisitorCounter;
+use Illuminate\Support\Facades\Http;
+use App\Model\Subscribers\Subscriber;
 use App\User;
 use App\Model\Rider;
 use App\Model\AdminChat;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use DB;
+use App\Model\Coupons;
 use Sentinel;
 use Carbon\Carbon;
 use Cache;
+use App\Model\UserDevices;
 
 class HomeController extends Controller
 {
@@ -512,6 +516,61 @@ class HomeController extends Controller
         $rider = Rider::find($id);
         $rider->deactivated = 0;
         $rider->update();
+        return redirect()->back();
+    }
+
+    public function riderSetVehicle(Request $request){
+        $request->validate([
+            "id"=>'required',
+            "vehicle"=>'required'
+        ]);
+        $rider = Rider::find($request->id);
+        $rider->vehicle_type = $request->vehicle;
+        $rider->update();
+        return redirect()->back();
+
+    }
+
+    public function couponsList()
+    {
+        $coupons = Coupons::where('used',0)->get();
+        return Inertia::render('Coupons',['coupons'=>$coupons]);
+    }
+
+    public function couponsPost(Request $request)
+    {
+        $request->validate([
+            'date'=>'required',
+            'type'=>'required',
+            'amount'=>'required'
+        ]);
+        $user = Subscriber::all();
+        if(count($user)>0){
+             foreach ($user as $u) {
+            $code = $u->id.time();
+            $device = UserDevices::where('user_id',$u->id)->get();
+            Coupons::create([
+                'user_id'=>$u->id,
+                'type'=>$request->type,
+                'code'=>$code,
+                'expire_date'=>$request->date,
+                'amount'=>$request->amount
+            ]);
+            foreach($device as $d){
+                $response = Http::withHeaders([
+                    'Accept'=> 'application/json',
+                    'Accept-encoding'=> 'gzip, deflate',
+                    'Content-Type'=> 'application/json',
+                ])->post('https://exp.host/--/api/v2/push/send', [
+                    'to'=> $d->token,
+                    'sound'=> 'default',
+                    'title'=> 'Got new coupon',
+                    'body'=> 'You have got new coupon',
+                ]);
+            }
+
+        }
+        }
         return redirect()->back();
     }
 }

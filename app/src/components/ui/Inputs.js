@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import {Input,Button} from 'react-native-elements';
 
 /*Basic Input*/
@@ -238,33 +239,33 @@ const styles = StyleSheet.create({
         width:250,
         borderColor: '#a1a1a1',
         borderWidth: 1,
-        borderRadius:10,
+        borderRadius:30,
         margin:10,
-        padding:10
+        padding:8
     },
     buttonRed:{
         alignItems: "center",
         width:250,
         backgroundColor: "#560027",
-        padding: 10,
+        padding: 8,
         margin: 10,
-        borderRadius: 10
+        borderRadius: 30
     },
     buttonGreen:{
         alignItems: "center",
         width:250,
         backgroundColor: "#16b306",
-        padding: 10,
+        padding: 8,
         margin: 10,
-        borderRadius: 10
+        borderRadius: 30
     },
     buttonBlue:{
         alignItems: "center",
         width:250,
         backgroundColor: "#000063",
-        padding: 10,
+        padding: 8,
         margin: 10,
-        borderRadius: 10
+        borderRadius: 30
     },
     buttonYellow:{
         alignItems: "center",

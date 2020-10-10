@@ -30,8 +30,9 @@ import Info from "../profile/Info"
 import EditProfile from "../profile/EditProfile"
 import Settings from "../profile/Settings"
 import Faq from "../profile/Faq"
+import FindPanel from "./FindPanel"
 import { FontAwesome } from '@expo/vector-icons';
-
+import RiderMap from "../rider/home/RiderMap"
 class Index extends Component {
 
     componentDidMount(){
@@ -63,7 +64,8 @@ const mainStack = createStackNavigator({
     RiderForgot:{screen:RiderForgot},
 },{
     headerMode:'none',
-    initialRouteName:'Loader'
+    initialRouteName:'Loader',
+    transitionConfig: () => fromRight(500),
 });
 const NonLoggedIn = createAppContainer(mainStack);
 
@@ -159,7 +161,24 @@ const StackTwo = createStackNavigator({
             height: 40,
             paddingBottom:25,
         },
-        headerTitle:'Searching',
+        headerTitle:'Confirm Ride',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    FindPanel:{screen: FindPanel,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        header:null,
+        activeTintColor:'#ffffff',
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerTitle:'Confirm Ride',
         headerTitleStyle:{
             color:'#ccc',
             fontSize:20,
@@ -354,6 +373,12 @@ const RiderStackTwo = createStackNavigator({
             ),
         })
     },
+    RiderMap:{screen:RiderMap,navigationOptions:({navigation})=>({
+        header:null,
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerTitle:'Map',
+    })},
     Profile:{screen:Profile,navigationOptions:({navigation})=>({
         tintColor:'#eeeeee',
         activeTintColor:'#ffffff',
@@ -364,6 +389,22 @@ const RiderStackTwo = createStackNavigator({
         },
         headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
         headerTitle:'Profile',
+        headerTitleStyle:{
+            color:'#ccc',
+            fontSize:20,
+            fontWeight:'bold'
+        }
+    })},
+    EditProfile:{screen: EditProfile,navigationOptions:({navigation})=>({
+        tintColor:'#eeeeee',
+        activeTintColor:'#ffffff',
+        headerStyle:{
+            backgroundColor:'#000063',
+            height: 40,
+            paddingBottom:25,
+        },
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}><FontAwesome name={'arrow-left'} size={20} style={{color:'white',marginLeft:20}} /></TouchableOpacity>,
+        headerTitle:'EditProfile',
         headerTitleStyle:{
             color:'#ccc',
             fontSize:20,
@@ -437,6 +478,15 @@ const RiderCustomDrawerDesign = (props)=>(
            />
         </Header>
         <View>
+        <TouchableOpacity
+                onPress={()=>props.navigation.navigate('Home')}
+                style={styles.drawerButtons}>
+                <View style={{width:'auto',height:40,paddingLeft:25}}>
+                    <Text style={{color:'#606060'}}>
+                        Home
+                    </Text>
+                </View>
+            </TouchableOpacity>
             <TouchableOpacity
                 onPress={()=>props.navigation.navigate('Profile')}
                 style={styles.drawerButtons}>

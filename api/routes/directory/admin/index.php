@@ -54,7 +54,13 @@ Route::get('/user','HomeController@userList')->name('user.list');
 Route::get('/rider','HomeController@riderList')->name('rider.list');
 Route::get('/rider/activate/{id}','HomeController@riderActivate')->name('rider.activate');
 Route::get('/rider/deactivate/{id}','HomeController@riderDeactivate')->name('rider.deactivate');
+Route::post('/rider/set/vehicle','HomeController@riderSetVehicle')->name('rider.setVehicle');
 /*Riders*/
+
+/*Coupons*/
+Route::get('/coupons','HomeController@couponsList')->name('coupons.list');
+Route::post('/coupons','HomeController@couponsPost')->name('coupons.post');
+/*Coupons*/
 
 /*Mailbox*/
 Route::resource('mail', 'MailboxController');

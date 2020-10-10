@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { Text, StyleSheet, View,TouchableOpacity,ToastAndroid } from 'react-native'
+import { Text, StyleSheet, View,TouchableOpacity,ToastAndroid,Dimensions } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 import {Inputs,Passwords,InputButtonBlue} from "../../components/ui/Inputs";
 class Login extends Component {
     
@@ -41,6 +44,7 @@ class Login extends Component {
             if (this.state.password.length < 8){
                 this.setState({loading:false})
                 this.setState({passwordErrorHeight:15})
+
                 this.setState({passwordError:'Password field should be at least 8 character'});
             }else{
                 const host = this.props.host;
@@ -107,20 +111,42 @@ class Login extends Component {
             const onPress = () => {console.log('pressed')};
         return (
             <View style={styles.container}>
-                <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>ENTER OTP</Text>
+                <TouchableOpacity
+                style={{position:'absolute',top:20,left:20}} 
+                onPress={()=>{this.props.navigation.navigate('MainPage')}}
+                >
+                <Icon  name={'angle-left'} size={30} color="white"/>
+                </TouchableOpacity>
+               <View style={{height:Dimensions.get('window').height*0.15,paddingTop:50,alignSelf:'flex-end',paddingRight:50}}>
+                   
+                <Animatable.Text animation="bounceIn" delay={1000} style={{fontSize:30,color:'#000063',marginBottom:40}}>ENTER OTP</Animatable.Text>
+                </View>
+                <Animatable.View animation="slideInUp" style={{alignItems:'center',backgroundColor:'#ffffff',width:'100%',height:Dimensions.get('window').height*0.85,paddingTop:150,borderTopLeftRadius:50,borderTopRightRadius:50}}>
                 <Inputs
                     ph={'OTP'}
                     val={this.state.otp}
                     onChangeTexts={(value)=>{this.setState({otp:value})}} />
                 <Text style={{color:'red',height:this.state.otpErrorHeight}}>{this.state.otpError}</Text>
                 <InputButtonBlue loading={this.state.loading} onPress={()=>{this.verifyOtp()}} value={'Verify'}/>
+                </Animatable.View>
             </View>
         )
         }else{
             const onPress = () => {console.log('pressed')};
         return (
             <View style={styles.container}>
-                <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>LOGIN</Text>
+                <TouchableOpacity
+                style={{position:'absolute',top:20,left:20}} 
+                onPress={()=>{this.props.navigation.navigate('MainPage')}}
+                >
+                <Icon  name={'angle-left'} size={30} color="white"/>
+                </TouchableOpacity>
+                <View style={{height:Dimensions.get('window').height*0.15,paddingTop:60,paddingRight:50,alignSelf:'flex-end'}}>
+                
+                <Animatable.Text animation="bounceIn" delay={1000} style={{fontSize:30,color:'#000063',marginBottom:40}}>LOGIN</Animatable.Text>
+                </View>
+                
+              <Animatable.View animation="slideInUp" style={{alignItems:'center',backgroundColor:'#ffffff',width:'100%',height:Dimensions.get('window').height*0.85,paddingTop:150,borderTopLeftRadius:50,borderTopRightRadius:50}}>
                 <Inputs
                     ph={'Email'}
                     val={this.state.username}
@@ -141,10 +167,8 @@ class Login extends Component {
                             <Text style={{color:'#000063'}}>Forget password?</Text>
                         </TouchableOpacity>
                     </View>
-
                 <InputButtonBlue loading={this.state.loading} onPress={()=>{this.onButtonPress()}} value={'Sign In'}/>
                 <Text style={{color:'#ccc'}}>OR</Text>
-
                 <TouchableOpacity
                     onPress={()=>{
                         this.props.navigation.navigate('Register');
@@ -152,7 +176,7 @@ class Login extends Component {
                 >
                     <Text style={{color:'#000063'}}>Sign Up</Text>
                 </TouchableOpacity>
-
+              </Animatable.View>
             </View>
         )
         }
@@ -177,7 +201,8 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        backgroundColor:'#e6b54c',
     },
     property:{
         color:'#000063'

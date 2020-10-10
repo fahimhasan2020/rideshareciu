@@ -31,6 +31,8 @@ class CreateSubscriber extends Migration
             $table->string('date_of_birth')->nullable();
             $table->string('phone_number')->nullable()->unique();
             $table->string('remember_token')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
         });
     }

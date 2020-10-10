@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { Text, StyleSheet, View,TouchableOpacity,ToastAndroid } from 'react-native'
+import { Text, StyleSheet, View,TouchableOpacity,ToastAndroid,Dimensions } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 import {Inputs,Passwords,InputButtonBlue} from "../../../components/ui/Inputs";
 class RiderForgot extends Component {
     state = {
@@ -113,7 +116,17 @@ class RiderForgot extends Component {
         if(this.state.sent && !this.state.reset){
             return (
                 <View style={styles.container}>
-                    <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>Enter OTP</Text>
+                     <TouchableOpacity
+                style={{position:'absolute',top:20,left:20}} 
+                onPress={()=>{this.props.navigation.navigate('RiderLogin')}}
+                >
+                <Icon  name={'angle-left'} size={30} color="white"/>
+                </TouchableOpacity>
+               <View style={{height:Dimensions.get('window').height*0.15,paddingTop:50,alignSelf:'flex-end',paddingRight:50}}>
+                   
+                <Animatable.Text animation="bounceIn" delay={1000} style={{fontSize:30,color:'#000063',marginBottom:40}}>ENTER OTP</Animatable.Text>
+                </View>
+                <Animatable.View animation="slideInUp" style={{alignItems:'center',backgroundColor:'#ffffff',width:'100%',height:Dimensions.get('window').height*0.85,paddingTop:150,borderTopLeftRadius:50,borderTopRightRadius:50}}>
                     <Inputs
                         ph={'otp'}
                         val={this.state.otp}
@@ -127,12 +140,23 @@ class RiderForgot extends Component {
                     >
                         <Text style={{color:'#000063'}}>Sign In</Text>
                     </TouchableOpacity>
+                    </Animatable.View>
                 </View>
             )
         }if(!this.state.sent && this.state.reset){
             return (
                 <View style={styles.container}>
-                    <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>Reset Password</Text>
+                      <TouchableOpacity
+                style={{position:'absolute',top:20,left:20}} 
+                onPress={()=>{this.props.navigation.navigate('RiderLogin')}}
+                >
+                <Icon  name={'angle-left'} size={30} color="white"/>
+                </TouchableOpacity>
+               <View style={{height:Dimensions.get('window').height*0.15,paddingTop:50,alignSelf:'flex-end',paddingRight:50}}>
+                   
+                <Animatable.Text animation="bounceIn" delay={1000} style={{fontSize:30,color:'#000063',marginBottom:40}}>RESET PASSWORD</Animatable.Text>
+                </View>
+                <Animatable.View animation="slideInUp" style={{alignItems:'center',backgroundColor:'#ffffff',width:'100%',height:Dimensions.get('window').height*0.85,paddingTop:150,borderTopLeftRadius:50,borderTopRightRadius:50}}>
                     <Passwords
                         ph={'Password'}
                         val={this.state.password}
@@ -150,13 +174,23 @@ class RiderForgot extends Component {
                     >
                         <Text style={{color:'#000063'}}>Verify</Text>
                     </TouchableOpacity>
-    
+    </Animatable.View>
                 </View>
             )
         }else if(!this.state.sent && !this.state.reset){
             return (
                 <View style={styles.container}>
-                    <Text style={{fontSize:30,color:'#000063',marginBottom:40}}>Forgot Password</Text>
+                     <TouchableOpacity
+                style={{position:'absolute',top:20,left:20}} 
+                onPress={()=>{this.props.navigation.navigate('RiderLogin')}}
+                >
+                <Icon  name={'angle-left'} size={30} color="white"/>
+                </TouchableOpacity>
+               <View style={{height:Dimensions.get('window').height*0.15,paddingTop:50,alignSelf:'flex-end',paddingRight:50}}>
+                   
+                <Animatable.Text animation="bounceIn" delay={1000} style={{fontSize:30,color:'#000063',marginBottom:40}}>FORGOT PASSWORD</Animatable.Text>
+                </View>
+                <Animatable.View animation="slideInUp" style={{alignItems:'center',backgroundColor:'#ffffff',width:'100%',height:Dimensions.get('window').height*0.85,paddingTop:150,borderTopLeftRadius:50,borderTopRightRadius:50}}>
                     <Inputs
                         ph={'Enter email to send verification code'}
                         val={this.state.username}
@@ -170,7 +204,7 @@ class RiderForgot extends Component {
                     >
                         <Text style={{color:'#000063'}}>Sign In</Text>
                     </TouchableOpacity>
-    
+    </Animatable.View>
                 </View>
             )
         }
@@ -195,7 +229,8 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        backgroundColor:'#e6b54c',
     },
     property:{
         color:'blue'

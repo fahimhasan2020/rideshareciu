@@ -22,7 +22,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.test.test",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "rideshareapi.com"
     }
   }
 }

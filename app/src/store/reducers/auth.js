@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 const data = {
-    'host':'http://192.168.0.107:8000/',
+    'host':'http://rideshare.bestreviewscorner.com/',
     'firstName':'',
     'lastName':'',
     'rider':false,
@@ -16,7 +16,9 @@ const data = {
     'distance':0,
     'vehicleType':'',
     'startPlaceId':'',
-    'endPlaceId':''
+    'endPlaceId':'',
+    'requestType':'',
+    'rideId':0
 };
 
 const reducer = (state = data, action) => {
@@ -30,9 +32,11 @@ const reducer = (state = data, action) => {
             };
         case 'RIDERLOGOUT':
             AsyncStorage.setItem('loggedIn', 'false')
+            AsyncStorage.setItem('riderLoggedIn', 'false')
             return {
                 ...state,
-                loggedIn: action.logged
+                loggedIn: action.logged,
+                rider:action.logged
             };
         case 'LOGIN':
             return {
@@ -40,6 +44,7 @@ const reducer = (state = data, action) => {
                 loggedIn: action.logged
             };
         case 'RIDERLOGIN':
+            AsyncStorage.setItem('riderLoggedIn', 'true')
             return {
                 ...state,
                 loggedIn: action.logged,
@@ -71,6 +76,16 @@ const reducer = (state = data, action) => {
             return {
                 ...state,
                 vehicleType: action.point
+            };
+        case 'CHANGE_Type':
+            return {
+                ...state,
+                requestType: action.point
+            };
+        case 'CHANGE_RIDEID':
+            return {
+                ...state,
+                rideId: action.point
             };
         default:
             return state;

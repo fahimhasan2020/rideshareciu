@@ -10,7 +10,7 @@ class RiderContents extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text> Content </Text>
+                <Text> No history available </Text>
             </View>
         )
     }

@@ -15,6 +15,11 @@ class CreatePole extends Migration
     {
         Schema::create('pole', function (Blueprint $table) {
             $table->id();
+            $table->string('starting_cordinate');
+            $table->string('ending_cordinate');
+            $table->string('total_rent');
+            $table->string('rider_id');
+            $table->integer('completed')->default(0);
             $table->timestamps();
         });
     }

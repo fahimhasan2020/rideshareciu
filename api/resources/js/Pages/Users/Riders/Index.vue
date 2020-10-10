@@ -68,6 +68,7 @@
                                                 </div>
                                             </th>
                                             <th scope="col" style="vertical-align: middle">Avatar</th>
+                                            <th scope="col" style="width: 150px;vertical-align: middle">Type</th>
                                             <th scope="col" style="width: 150px;vertical-align: middle">Email</th>
                                             <th scope="col" style="width: 150px;vertical-align: middle">National Id</th>
                                             <th scope="col" style="width: 150px;vertical-align: middle">First Name</th>
@@ -84,8 +85,17 @@
                                                 </div>
                                             </th>
                                             <td style="vertical-align: middle">
-                                                <img height="50px" width="50px" v-if="permission.profile_picture" :src="permission.profile_picture" alt="">
+                                                <img height="50px" width="50px" v-if="permission.profile_picture" :src="'/images/'+permission.profile_picture" alt="">
                                                 <img height="50px" width="50px" v-else src="../../../../../public/admin/assets/images/icons/assistant.svg" alt="">
+                                            </td>
+                                            <td style="vertical-align: middle">
+                                                <select v-model="vehicleChoose" @change="setVehicle(permission.id)" class="form-control" name="vahicle" id="">
+                                                    <option value="">-Select vehicle type-</option>
+                                                    <option value="bike">Bike</option>
+                                                    <option value="car">Car</option>
+                                                    <option value="micro mini">Microbus mini</option>
+                                                    <option value="micro big">Microbus big</option>
+                                                </select>
                                             </td>
                                             <td style="vertical-align: middle">{{permission.email}}</td>
                                             <td style="vertical-align: middle">{{permission.nid}}</td>
@@ -175,6 +185,7 @@
                 importFile:'',
                 isLoading:false,
                 bulkAction:'',
+                vehicleChoose:'',
                 customChildControl:'display-none',
                 customEditChildControl:'display-none',
                 customChildList:[],
@@ -222,10 +233,6 @@
 
         props: {
             permissions:Object,
-        },
-
-        computed: {
-            //
         },
 
         created () {
@@ -554,6 +561,9 @@
             nextPage(page){
                 this.currentPage = page;
                 this.dataTable();
+            },
+            setVehicle(id){
+                this.$inertia.post('/admins/rider/set/vehicle',{id:id,vehicle:this.vehicleChoose});
             }
         }
     };
