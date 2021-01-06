@@ -12,7 +12,7 @@
     "@react-native-community/async-storage": "github:react-native-community/async-storage",
     "@react-native-community/datetimepicker": "^3.0.1",
     "@react-native-community/netinfo": "^5.9.7",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "expo": "~37.0.3",
     "expo-font": "~8.1.0",
     "expo-image-picker": "~8.1.0",
